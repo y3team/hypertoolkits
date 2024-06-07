@@ -1,6 +1,6 @@
 
 # HTK工具箱使用说明书
-版本V1.0.02 更新于2024-5-10 作者:y3team
+版本V1.0.04 更新于2024-5-26 作者:y3team
 ## 本程序是基于python编写的工具脚本
 1.[点击跳转软件官网](https://www.hypertools.com.cn)<br>
 2.[点击跳转源代码开源网站](https://github.com/y3team/hypertoolskit)<br>
@@ -11,19 +11,23 @@
 7.预览版如果有BUG，请反馈至y3team@outlook.com,up是学生，可能不能及时处理您的日志！<br>
 祝您使用愉快！
 
+> v1.0.04预览版更新内容：
+* 增加拖拽文件打开查看基本信息和sha-256
+* 整理代码逻辑
+* 修复已知问题
+* [软件下载](https://resource.hypertools.com.cn/htk/htk-setup-1.0.04.exe)
+
 > v1.0.03预览版更新内容：
 * 增加hwid查询
 * 整理代码逻辑
 * 增加开机自启动功能
 * 改进了更新功能
-* [软件下载](https://resource.hypertools.com.cn/htk/htk-setup-1.0.03.exe)
 
 > v1.0.02-fix预览版更新内容：
 * 提高运行安全性
 * 修复已知可解决BUG
 * 改善程序逻辑性
 * 改善更新系统机制
-* [软件下载](https://resource.hypertools.com.cn/htk/htk-setup-v1.0.02.exe)
 
 > v1.0.02预览版更新内容：
 * 增加hosts(增加/删去/修改)功能
@@ -63,10 +67,10 @@ pyinstaller index.py -i logo.ico --name=htk --uac-admin --onefile
 pyinstaller upgrade.py -i logo.ico --name=upgrade --uac-admin --onefile
 ```
 ## 如何联系我们
-* 通过邮件：y3team@outlook.com
+* 通过邮件：team@hypertools.com.cn
 * 通过QQ用户群：318483304 [加入链接](https://qm.qq.com/q/NoCSaxyZs4)
 
 ## 如何加入我们
 * 通过QQ用户群：318483304 [加入链接](https://qm.qq.com/q/NoCSaxyZs4)，联系群主询问
-* 通过发送邮件给y3team@outlook.com进行询问
+* 通过发送邮件给team@hypertools.com.cn进行询问
 
