@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>HTK-实用工具箱</title>
+<link rel="stylesheet" href="./css/main.css">
+<link rel="stylesheet" href="./css/sweetalert2.min.css">
+<link rel="stylesheet" href="./css/github-markdown.min.css">
+<link rel="stylesheet" href="./css/default.min.css">
+<link rel="shortcut icon" href="logo.ico">
+<script src="./js/marked.min.js"></script>
+<!-- 引入 highlight.js 库及样式 -->
+<script src="./js/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script src="./js/go.min.js"></script>
+<script src="./js/main.js"></script>
+<script src="./js/sweetalert2@11.js"></script>
+<script src="./js/crypto-js.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="keywords" content="HTK,hypertools,工具箱,toolkits">
+<meta name="author" content="y3team">
+
+<script>
+  // Function to save localStorage to JSON file
+  function saveLocalStorageToJson(data) {
+    // Convert data to JSON string
+    const jsonStr = JSON.stringify(data);
+
+    // Send JSON string to Python backend via pywebview API
+    pywebview.api.save_localstorage_to_file(jsonStr);
+  }
+
+  // Function to save localStorage data
+  function saveLocalStorageData() {
+    const data = {};
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      data[key] = localStorage.getItem(key);
+    }
+
+    // 调用保存到 JSON 文件的函数
+    saveLocalStorageToJson(data);
+  }
+
+  // 使用一个interval不断检查pywebview是否可用
+  const checkPywebview = setInterval(async function() {
+    if (typeof pywebview !== 'undefined' && pywebview.api) {
+      clearInterval(checkPywebview);
+
+      // 从Python端获取LocalStorage数据
+      const localStorageData = await pywebview.api.get_localstorage();
+      for (const [key, value] of Object.entries(localStorageData)) {
+        localStorage.setItem(key, value);
+      }
+
+      // 加载用户协议
+      checkAgreement();
+    }
+  }, 100); // 每100ms检查一次
+
+  function checkAgreement() {
+    // Check localStorage for agreement status
+    var agreementCheckup = localStorage.getItem('agreementcheckup');
+    console.log('用户协议同意状态:', agreementCheckup);
+
+    // If agreementcheckup is not set or is '0', show the agreement popup
+    if (!agreementCheckup || agreementCheckup === '0') {
+      console.log('显示协议弹出框');
+
+      // Load and display Markdown content using SweetAlert
+      fetchMarkdownContent('./agreement.md', function(markdownContent) {
+        console.log('获取的Markdown内容');
+
+        // Display SweetAlert modal with Markdown content
+        Swal.fire({
+          title: '用户协议',
+          html: `<div class="markdown-body" style="max-height: 500px; overflow-y: auto;text-align:left;">${markdownContent}</div>`,
+          confirmButtonText: '同意协议',
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+          showCancelButton: false,
+          showCloseButton: false,
+          didClose: () => {
+            console.log('用户关闭了弹出窗口');
+
+            // Update localStorage after user closes the popup
+            localStorage.setItem('agreementcheckup', '1');
+            console.log('更新了localStorage中的协议检查状态');
+
+            // 调用保存到 JSON 文件的函数
+            saveLocalStorageData();
+          }
+        });
+      });
+    }
+  }
+
+  // Function to fetch Markdown content
+  function fetchMarkdownContent(markdownPath, callback) {
+    console.log('从文件夹获取md文件:', markdownPath);
+
+    // Fetch Markdown file content
+    fetch(markdownPath)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('网络请求失败');
+        }
+        return response.text();
+      })
+      .then(text => {
+        // Convert Markdown to HTML using marked.js
+        const html = marked.parse(text); // 确保使用了正确的 `marked` 方法
+        // Execute callback with HTML content
+        callback(html);
+      })
+      .catch(err => console.error('Failed to fetch Markdown file:', err));
+  }
+
+  // 在窗口关闭前保存LocalStorage数据
+  window.addEventListener('beforeunload', function() {
+    saveLocalStorageData();
+  });
+</script>
+
+</head>
+<body>
+
+    
+  <div class="navbar"><!--导航栏-->
+    <div class="logo"><img src="logo.ico" alt="logo"></div>
+    <ul class="nav-links">
+        <li><a href="#">首页</a></li>
+        <li><a href="./toolweb/index.html">实用工具合集</a></li>
+    </ul>
+  </div>
+
+<div class="product-container">
+  <div class="product-logo"><img src="logo.png" alt="Logo"></div>
+  <div class="product-info">
+      <h1>HTK工具包</h1><!--中间主题介绍部分-->
+      <p class="subtitle">简洁·实用·兼容·免费</p>
+      <input class="download-btn" id="upgrade" value="检查版本更新">
+      <br><br>
+      <input class="download-btn" id="announcement" value="关于软件版本">
+      <!--下面是检测更新模块-->
+      <script>
+        document.getElementById("upgrade").onclick = function() {
+          Swal.fire({
+                title: "提示",
+                text: "测试版本不提供更新服务",
+                icon: "warning",
+                button: "已阅",
+              });
+        }
+        document.getElementById("announcement").onclick = function() {
+          Swal.fire({
+                title: "全站公告",
+                text: "版本号:1.1.01 作者:y3team B站:y3team",
+                icon: "success",
+                button: "朕已阅",
+              });
+        }
+      </script>
+  </div>
+</div>
+
+<div class="product-container">
+  <div id="followerData" class="follower-data">加载中...</div>
+
+  <script>
+    // 定义一个函数来更新粉丝数据
+    window.updateFollowerData = function(data) {
+        console.log("Received data:", data);  // 控制台输出接收到的数据
+
+        const followerDataDiv = document.getElementById('followerData');
+        if (data.code === 0) {
+            const followers = data.data.follower;
+            followerDataDiv.innerHTML = `哇!我在B站居然有 <br>${followers}个<br>铁杆粉丝!`;
+        } else {
+            followerDataDiv.textContent = `无法获取粉丝数据: ${data.message}`;
+        }
+    };
+
+    // 当页面加载完成时调用获取粉丝数据的逻辑
+    window.onload = function() {
+        // 这里调用后端的获取粉丝数据的函数
+        // 假设在后端 Python 中已经有调用 get_follower_data 的代码
+        // 这是一个示例，实际逻辑在 Python 端实现
+        // 调用不存在的接口，实际请确认 Python 后端实现
+        webview.windows[0].get_follower_data(); // 假设你有一个可以直接调用的后端函数
+    };
+</script>
+
+    
+</div>
+
+<center><div id="tcomment" class="twikoo"></div></center>
+<script src="./js/twikoo.all.min.js"></script>
+
+<footer class="site-footer">
+  <div class="footer-content">
+    <!-- 其他footer-section... -->
+    <div class="footer-section">
+      <h4>服务支持</h4>
+      <ul>
+        <li>QQ群:318483304</li>
+        <!-- 其他列表项... -->
+      </ul>
+    </div>
+    <div class="footer-section">
+      <h4>版本信息</h4>
+      <ul>
+        <li>版本号:1.1.01 beta</li>
+        <li>作者:y3team</li>
+        <!-- 其他列表项... -->
+      </ul>
+    </div>
+    <div class="footer-section">
+      <h4>联系我们</h4>
+      <p>team@y3team.top</p>
+      <p>周五~周日不定期在线</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-logo"></div>
+    <div class="footer-info">
+      <p>由python深度改造<br>© 2024~2024 htk.y3team.top</p>
+      <!-- 其他信息... -->
+    </div>
+    <div class="back-to-top" onclick="scrollToTop()">&uarr;</div>
+  </div>
+</footer>
+</body>
+</html>

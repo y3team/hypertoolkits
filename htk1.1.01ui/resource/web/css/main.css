@@ -1,0 +1,251 @@
+body {
+  font-family: Arial, sans-serif;
+}
+
+.site-footer {
+  background-color: #f2f2f2;
+  color: #666;
+  padding: 20px 0;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 50px;
+}
+
+.footer-section h4 {
+  color: #333;
+  margin-bottom: 5px;
+}
+
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-section ul li {
+  line-height: 2;
+  color: #333;
+}
+
+.footer-bottom {
+  border-top: 1px solid #e0e0e0;
+  padding-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 50px;
+}
+
+
+.footer-info {
+  font-size: 12px;
+  margin: auto; /* 在水平和垂直方向上都居中 */
+  text-align: center; /* 文本居中对齐 */
+}
+
+button {
+  background-color: #ff6700;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #e65c00;
+}
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar {
+  background-color: #f4f4f4;
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+}
+
+.logo {
+  font-size: 20px;
+  margin-right: auto; /* 将logo推到最左侧 */
+}
+.logo img {
+  max-width: 100px; /* 设置最大宽度 */
+  max-height: 50px; /* 设置最大高度 */
+  display: block; /* 让图片水平居中 */
+  margin: 0 auto; /* 让图片水平居中 */
+}
+.nav-links {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+.nav-links li a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  width: 0;
+  height: 2px;
+  background-color: blue;
+  transition: width 0.5s ease; /* 添加过渡效果 */
+}
+
+.nav-links li a:hover::after {
+  width: 100%;
+}
+
+.nav-links li {
+  margin-right: 20px;
+}
+
+.nav-links li a {
+  text-decoration: none;
+  color: rgb(51, 51, 51);
+  position: relative;
+}
+
+.nav-links li a:hover::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  width: 100%;
+  height: 2px;
+  background-color: blue;
+}
+.product-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 20%;
+  padding-right: 20%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.logo {
+  flex: 0 0 auto;
+}
+
+.product-logo img {
+  width: 270px; /* 设置 logo 图片宽度 */
+  height: auto; /* 让高度自适应，保持比例 */
+}
+
+.product-info {
+  flex: 1 1 auto;
+  text-align: right;
+}
+
+h1 {
+  font-weight: bold;
+}
+
+.subtitle {
+  font-size: 0.8em;
+  color: rgb(102, 102, 102);
+}
+
+.download-btn {
+  max-width: 80px;
+  padding: 10px 10px;
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: border-color 0.3s, color 0.3s, background-color 0.3s;
+}
+.old-download-btn {
+  padding: 10px 20px;
+  background-color: rgb(102, 102, 102);
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: border-color 0.3s, color 0.3s, background-color 0.3s;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+tr:hover {
+  background-color: #dddddd;
+}
+.back-to-top {
+  position: fixed;
+  bottom: 70px; /* Adjust this value to avoid overlapping with the footer */
+  right: 20px;
+  display: none;
+  width: 50px;
+  height: 50px;
+  background-color: rgba(102, 102, 102, 0.6); /* Semi-transparent black */
+  color: #fff;
+  text-align: center;
+  line-height: 50px;
+  border-radius: 30%;
+  cursor: pointer;
+  z-index: 999; /* Ensure it's above other content */
+}
+/* 下面是用来给json展示框做的框架*/
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  max-width: 1200px;
+}
+.grid-item {
+  border: none; /* 移除边框 */
+  padding: 20px;
+  text-align: center;
+  background: linear-gradient(to right, #6dd5ed, #2193b0); /* 从左到右的蓝色渐变 */
+  color: white; /* 文字颜色 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 添加阴影 */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* 平滑过渡效果 */
+  border-radius: 10px; /* 圆角边框 */
+}
+
+.grid-item:hover {
+  transform: translateY(-5px); /* 鼠标悬浮时上移 */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* 鼠标悬浮时阴影加深 */
+}
+
+.follower-data {
+  font-family: Arial, sans-serif;
+  font-size: 20px;
+  color: #333;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  width: 500px;
+  text-align: center;
+  margin: 50px auto;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.twikoo {
+  max-width: 1200px;
+  text-align: left;
+}

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>计算sha256值</title>
+  <link rel="stylesheet" href="../../css/main.css">
+<link rel="shortcut icon" href="../../logo.ico" >
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- 引入 highlight.js 用于代码语法高亮 -->
+<link rel="stylesheet" href="../../css/github-markdown.min.css">
+<link rel="stylesheet" href="../../css/default.min.css">
+<script src="../../js/marked.min.js"></script>
+<!-- 引入 highlight.js 库及样式 -->
+<script src="../../js/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script src="../../js/go.min.js"></script>
+<script>hljs.highlightAll();</script>
+<script src="../../js/highlight.min.js"></script>
+<script src="../../js/main.js"></script>
+<meta charset="UTF-8">
+<style>
+  #drop_zone {
+    border: 2px dashed #ccc;
+    padding: 20px;
+    text-align: center;
+    color: #ccc;
+    margin: 20px;
+  }
+  #drop_zone.dragover {
+    border-color: #000;
+    color: #000;
+  }
+#hash_output {
+    margin-top: 20px;
+}
+.copy-btn {
+    margin-left: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    padding: auto;
+  }
+  </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo"><img src=../../logo.ico alt="logo"></div>
+        <ul class="nav-links">
+            <li><a href="../../index.html">首页</a></li>
+            <li><a href="../index.html">实用工具合集</a></li>
+        </ul>
+    </div>
+
+    <div id="drop_zone">拖放文件到这里</div>
+    <div id="hash_output"></div>
+    <input type="file" id="file_input" style="display:none;">
+
+
+    <script>
+      const dropZone = document.getElementById('drop_zone');
+      const fileInput = document.getElementById('file_input');
+      const hashOutput = document.getElementById('hash_output');
+    
+      ['dragover', 'dragleave', 'drop'].forEach(eventName => {
+        dropZone.addEventListener(eventName, preventDefaults, false);
+      });
+    
+      fileInput.addEventListener('change', handleFiles, false);
+    
+      function preventDefaults(event) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+    
+      dropZone.addEventListener('drop', handleDrop, false);
+    
+      function handleDrop(event) {
+        let dt = event.dataTransfer;
+        let files = dt.files;
+        handleFiles(files);
+      }
+    
+      function handleFiles(files) {
+        files = Array.from(files); // 创建文件列表的副本
+    
+        files.forEach(file => {
+          fileToSha512(file).then((hash) => {
+            displayHash(hashOutput, file.name, hash);
+          }).catch((err) => {
+            console.error(err);
+          });
+        });
+      }
+    
+      function fileToSha512(file) {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+    
+          reader.onload = (event) => {
+            const arrayBuffer = event.target.result;
+            const buffer = new Uint8Array(arrayBuffer);
+    
+            window.crypto.subtle.digest('SHA-512', buffer).then(hash => {
+              const hashArray = Array.from(new Uint8Array(hash));
+              const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+              resolve(hashHex);
+            }).catch(reject);
+          };
+    
+          reader.onerror = () => reject('文件读取错误');
+          reader.readAsArrayBuffer(file);
+        });
+      }
+    
+      function displayHash(container, filename, hash) {
+        const outputDiv = document.createElement('div');
+        const hashText = document.createTextNode(`文件 ${filename} 的SHA-512哈希值: ${hash}`);
+        const copyBtn = document.createElement('button');
+        copyBtn.textContent = '复制';
+        copyBtn.className = 'copy-btn';
+        copyBtn.addEventListener('click', () => {
+          navigator.clipboard.writeText(hash).then(() => {
+            alert('哈希值已复制到剪贴板！');
+          }).catch(err => {
+            console.error('无法复制哈希值：', err);
+          });
+        });
+        outputDiv.appendChild(hashText);
+        outputDiv.appendChild(copyBtn);
+        container.appendChild(outputDiv);
+      }
+    </script>
+
+
+<footer class="site-footer">
+    <div class="footer-content">
+      <!-- 其他footer-section... -->
+      <div class="footer-section">
+        <h4>服务支持</h4>
+        <ul>
+          <li>QQ群:318483304</li>
+          <!-- 其他列表项... -->
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>版本信息</h4>
+        <ul>
+          <li>版本号:1.1.01 beta</li>
+          <li>作者:y3team</li>
+          <!-- 其他列表项... -->
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>联系我们</h4>
+        <p>team@y3team.top</p>
+        <p>周五~周日不定期在线</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-logo"></div>
+      <div class="footer-info">
+        <p>© 2023~2024 htk.y3team.top</p>
+        <p>由python深度改造<br>© 2024~2024 htk.y3team.top</p>
+        <!-- 其他信息... -->
+      </div>
+      <div class="back-to-top" onclick="scrollToTop()">&uarr;</div>
+    </div>
+  </footer>
+</body>
+</html>

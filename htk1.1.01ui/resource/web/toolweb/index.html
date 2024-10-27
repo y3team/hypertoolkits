@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>[HTK工具箱]小白技术教程</title>
+  <link rel="stylesheet" href="../css/main.css">
+<link rel="shortcut icon" href="../logo.ico" >
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="[HTK工具箱]小白技术教程，每周必更新">
+<!-- 引入 highlight.js 用于代码语法高亮 -->
+<link rel="stylesheet" href="../css/github-markdown.min.css">
+<link rel="stylesheet" href="../css/default.min.css">
+<script src="../js/marked.min.js"></script>
+<!-- 引入 highlight.js 库及样式 -->
+<script src="../js/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script src="../js/go.min.js"></script>
+<script>hljs.highlightAll();</script>
+<script src="../js/highlight.min.js"></script>
+<script src="../js/main.js"></script>
+<meta charset="UTF-8">
+<style>
+  body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+  }
+  .main-info {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+  }
+  .main-info img {
+      max-width: 100px;
+      height: auto;
+      border-radius: 4px;
+  }
+  .main-info h1 {
+      margin: 10px 0;
+      font-size: 24px;
+      color: #333;
+  }
+  .main-info p {
+      margin: 0;
+      color: #666;
+  }
+  .grid-item {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+  }
+  .grid-item h3 {
+      margin: 0 0 10px;
+      font-size: 18px;
+      color: #333;
+  }
+  .grid-item a {
+      display: inline-block;
+      margin-bottom: 10px;
+      color: #007bff;
+      text-decoration: none;
+  }
+  .grid-item a:hover {
+      text-decoration: underline;
+  }
+  .grid-item img {
+      max-width: 100px;
+      height: auto;
+      border-radius: 4px;
+  }
+  .grid-item p {
+      margin: 0;
+      color: #666;
+  }
+  #jsonSelect {
+      margin-bottom: 20px;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+  }
+</style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo"><img src=../logo.ico alt="logo"></div>
+        <ul class="nav-links">
+            <li><a href="../index.html">首页</a></li>
+        </ul>
+    </div>
+
+    <center>
+    <p>请先选择要打开的json文件:</p>
+    <select id="jsonSelect">
+    </select>
+    <div id="jsonContainer" class="grid-container"></div>
+    </center>
+    
+    <center><div id="tcomment" class="twikoo"></div></center>
+  <script src="../js/twikoo.all.min.js"></script>
+  <script>
+  twikoo.init({
+    envId: 'https://twikoo.y3team.top/', // 腾讯云环境填 envId；Vercel 环境填地址（https://xxx.vercel.app）
+    el: '#tcomment', // 容器元素
+    // region: 'ap-guangzhou', // 环境地域，默认为 ap-shanghai，腾讯云环境填 ap-shanghai 或 ap-guangzhou；Vercel 环境不填
+    // path: location.pathname, // 用于区分不同文章的自定义 js 路径，如果您的文章路径不是 location.pathname，需传此参数
+    lang: 'zh-CN', // 用于手动设定评论区语言，支持的语言列表 https://github.com/twikoojs/twikoo/blob/main/src/client/utils/i18n/index.js
+  })
+  </script>
+    <script src="../js/readjson.js"></script>
+    <footer class="site-footer">
+      <div class="footer-content">
+        <!-- 其他footer-section... -->
+        <div class="footer-section">
+          <h4>服务支持</h4>
+          <ul>
+            <li>QQ群:318483304</li>
+            <!-- 其他列表项... -->
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>版本信息</h4>
+          <ul>
+            <li>版本号:1.1.01 beta</li>
+            <li>作者:y3team</li>
+            <!-- 其他列表项... -->
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>联系我们</h4>
+          <p>team@y3team.top</p>
+          <p>周五~周日不定期在线</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-logo"></div>
+        <div class="footer-info">
+          <p>由python深度改造<br>© 2024~2024 htk.y3team.top</p>
+          <!-- 其他信息... -->
+        </div>
+        <div class="back-to-top" onclick="scrollToTop()">&uarr;</div>
+      </div>
+    </footer>
+</body>
+</html>
